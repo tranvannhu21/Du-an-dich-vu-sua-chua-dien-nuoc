@@ -1,20 +1,20 @@
 package com.diennuoc.app.dao;
 
 import com.diennuoc.app.entity.ThoSuaChua;
-import java.util.ArrayList;
+import com.diennuoc.app.utils.DocGhiFile; // Import công cụ
 import java.util.List;
 
 public class ThoSuaChuaDAO {
-    private List<ThoSuaChua> danhSachTho = new ArrayList<>();
+    private static final String TEN_FILE = "thosuachua.dat";
+    private static List<ThoSuaChua> danhSachTho = DocGhiFile.<ThoSuaChua>docFile(TEN_FILE);
 
-    // CREATE
     public void themTho(ThoSuaChua tho) {
         danhSachTho.add(tho);
+        DocGhiFile.ghiFile(danhSachTho, TEN_FILE);
     }
 
-    // READ: Chỉ lấy danh sách những thợ CÒN ĐANG HOẠT ĐỘNG (Chưa nghỉ việc)
     public List<ThoSuaChua> layDanhSachHoatDong() {
-        List<ThoSuaChua> dsHoatDong = new ArrayList<>();
+        java.util.ArrayList<ThoSuaChua> dsHoatDong = new java.util.ArrayList<>();
         for (ThoSuaChua tho : danhSachTho) {
             if (tho.isDangHoatDong()) {
                 dsHoatDong.add(tho);
@@ -23,26 +23,24 @@ public class ThoSuaChuaDAO {
         return dsHoatDong;
     }
 
-    // UPDATE
     public boolean capNhatTho(ThoSuaChua thoMoi) {
         for (int i = 0; i < danhSachTho.size(); i++) {
             ThoSuaChua thoHienTai = danhSachTho.get(i);
-            // Chỉ cập nhật nếu đúng mã và thợ đó chưa nghỉ việc
             if (thoHienTai.getMaSo().equals(thoMoi.getMaSo()) && thoHienTai.isDangHoatDong()) {
-                // Giữ lại trạng thái làm việc hiện tại, chỉ cập nhật thông tin
                 thoMoi.setSanSangLamViec(thoHienTai.isSanSangLamViec());
                 danhSachTho.set(i, thoMoi);
+                DocGhiFile.ghiFile(danhSachTho, TEN_FILE);
                 return true;
             }
         }
         return false;
     }
 
-    // DELETE (Soft Delete - Chuyển trạng thái sang Đã nghỉ việc)
     public boolean xoaMemTho(String maSo) {
         for (ThoSuaChua tho : danhSachTho) {
             if (tho.getMaSo().equals(maSo) && tho.isDangHoatDong()) {
-                tho.setDangHoatDong(false); // Đánh dấu là đã nghỉ việc
+                tho.setDangHoatDong(false);
+                DocGhiFile.ghiFile(danhSachTho, TEN_FILE);
                 return true;
             }
         }

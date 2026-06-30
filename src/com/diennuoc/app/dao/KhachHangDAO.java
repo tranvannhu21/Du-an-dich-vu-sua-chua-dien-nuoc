@@ -1,36 +1,39 @@
 package com.diennuoc.app.dao;
 
 import com.diennuoc.app.entity.KhachHang;
-import java.util.ArrayList;
+import com.diennuoc.app.utils.DocGhiFile; // Import công cụ đọc ghi file
 import java.util.List;
 
 public class KhachHangDAO {
-    // Dùng ArrayList làm Database giả lập
-    private List<KhachHang> danhSachKhachHang = new ArrayList<>();
-
-    // CREATE: Thêm khách hàng mới
+    private static final String TEN_FILE = "khachhang.dat";
+    private static List<KhachHang> danhSachKhachHang = DocGhiFile.<KhachHang>docFile(TEN_FILE);
     public void themKhachHang(KhachHang kh) {
         danhSachKhachHang.add(kh);
+        DocGhiFile.ghiFile(danhSachKhachHang, TEN_FILE);
     }
 
-    // READ: Lấy toàn bộ danh sách
     public List<KhachHang> layDanhSach() {
         return danhSachKhachHang;
     }
 
-    // UPDATE: Cập nhật thông tin dựa trên Mã số
     public boolean capNhatKhachHang(KhachHang khMoi) {
         for (int i = 0; i < danhSachKhachHang.size(); i++) {
             if (danhSachKhachHang.get(i).getMaSo().equals(khMoi.getMaSo())) {
                 danhSachKhachHang.set(i, khMoi);
-                return true; // Cập nhật thành công
+                // THÊM MỚI: Lưu lại ngay sau khi cập nhật
+                DocGhiFile.ghiFile(danhSachKhachHang, TEN_FILE);
+                return true;
             }
         }
-        return false; // Không tìm thấy
+        return false;
     }
 
-    // DELETE: Xóa khách hàng (Xóa cứng)
     public boolean xoaKhachHang(String maSo) {
-        return danhSachKhachHang.removeIf(kh -> kh.getMaSo().equals(maSo));
+        boolean ketQua = danhSachKhachHang.removeIf(kh -> kh.getMaSo().equals(maSo));
+        if (ketQua) {
+            // THÊM MỚI: Lưu lại danh sách mới sau khi đã xóa
+            DocGhiFile.ghiFile(danhSachKhachHang, TEN_FILE);
+        }
+        return ketQua;
     }
 }
