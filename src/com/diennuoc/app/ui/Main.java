@@ -12,7 +12,7 @@ public class Main {
         int luaChon = -1;
 
         while (luaChon != 0) {
-            System.out.println("\n=====================================================");
+            System.out.println("\n===================================================");
             System.out.println("   HỆ THỐNG QUẢN LÝ DỊCH VỤ SỬA CHỮA ĐIỆN NƯỚC");
             System.out.println("=====================================================");
             System.out.println("1. Quản lý Khách hàng");
