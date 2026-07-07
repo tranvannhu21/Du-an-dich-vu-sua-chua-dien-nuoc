@@ -7,7 +7,7 @@ import java.util.List;
 public class KhachHangBLL {
     private KhachHangDAO khachHangDAO = new KhachHangDAO();
 
-    public void themMoiKhachHang(String maSo, String hoTen, String soDienThoai, int diemTichLuy) {
+    public void themMoiKhachHang(String maSo, String hoTen, String soDienThoai ) {
         if (maSo.isEmpty() || hoTen.isEmpty()) {
             System.out.println("Lỗi: Mã số và Họ tên không được để trống!");
             return;
@@ -16,7 +16,7 @@ public class KhachHangBLL {
             System.out.println("Lỗi: Số điện thoại không hợp lệ!");
             return;
         }
-        KhachHang kh = new KhachHang(maSo, hoTen, soDienThoai, diemTichLuy);
+        KhachHang kh = new KhachHang(maSo, hoTen, soDienThoai);
         khachHangDAO.themKhachHang(kh);
         System.out.println("-> Thêm khách hàng thành công!");
     }
@@ -26,13 +26,13 @@ public class KhachHangBLL {
         if (ds.isEmpty()) {
             System.out.println("Danh sách khách hàng đang trống.");
         } else {
-            System.out.println("--- DANH SÁCH KHÁCH HÀNG ---");
+            System.out.println("Danh sách khách hàng:");
             for (KhachHang kh : ds) {
                 System.out.println(kh.toString());
             }
         }
     }
-    public void capNhatKhachHang(String maSo, String hoTenMoi, String soDienThoaiMoi, int diemTichLuyMoi) {
+    public void capNhatKhachHang(String maSo, String hoTenMoi, String soDienThoaiMoi) {
         if (maSo.isEmpty()) {
             System.out.println("Lỗi: Vui lòng nhập mã khách hàng cần sửa!");
             return;
@@ -41,7 +41,7 @@ public class KhachHangBLL {
             System.out.println("Lỗi: Dữ liệu cập nhật không hợp lệ (Tên trống hoặc SĐT quá ngắn)!");
             return;
         }
-        KhachHang khMoi = new KhachHang(maSo, hoTenMoi, soDienThoaiMoi, diemTichLuyMoi);
+        KhachHang khMoi = new KhachHang(maSo, hoTenMoi, soDienThoaiMoi);
         boolean thanhCong = khachHangDAO.capNhatKhachHang(khMoi);
         if (thanhCong) {
             System.out.println("-> Cập nhật thành công thông tin khách hàng mã: " + maSo);

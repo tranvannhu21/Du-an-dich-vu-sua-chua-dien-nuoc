@@ -9,14 +9,12 @@ public class KhachHang implements Serializable {
     protected String maSo;
     protected String hoTen;
     protected String soDienThoai;
-    protected int diemTichLuy;
 
     // Constructor
-    public KhachHang(String maSo, String hoTen, String soDienThoai, int diemTichLuy) {
+    public KhachHang(String maSo, String hoTen, String soDienThoai) {
         this.maSo = maSo;
         this.hoTen = hoTen;
         this.soDienThoai = soDienThoai;
-        this.diemTichLuy = diemTichLuy;
     }
 
     // --- Getters và Setters ---
@@ -42,13 +40,5 @@ public class KhachHang implements Serializable {
 
     public void setSoDienThoai(String soDienThoai) {
         this.soDienThoai = soDienThoai;
-    }
-
-    public int getDiemTichLuy() {
-        return diemTichLuy;
-    }
-
-    public void setDiemTichLuy(int diemTichLuy) {
-        this.diemTichLuy = diemTichLuy;
     }
 }

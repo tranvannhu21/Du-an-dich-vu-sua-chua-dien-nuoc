@@ -17,13 +17,12 @@ public class KhachHangDAO {
 
     // 2. Quy tắc GHI: Biến đối tượng KhachHang thành 1 dòng chữ (CSV)
     private static final Function<KhachHang, String> toCsv = kh ->
-            kh.getMaSo() + "," + kh.getHoTen() + "," + kh.getSoDienThoai() + "," + kh.getDiemTichLuy();
+            kh.getMaSo() + "," + kh.getHoTen() + "," + kh.getSoDienThoai();
 
     // 3. Quy tắc ĐỌC: Cắt dòng chữ (CSV) lắp lại thành đối tượng KhachHang
     private static final Function<String, KhachHang> fromCsv = line -> {
         String[] parts = line.split(",");
-        // parts[0] là Mã, parts[1] là Tên, parts[2] là SĐT, parts[3] là Điểm (cần ép sang số)
-        return new KhachHang(parts[0], parts[1], parts[2], Integer.parseInt(parts[3]));
+        return new KhachHang(parts[0], parts[1], parts[2]);
     };
 
     // 4. Load dữ liệu tự động khi khởi động
@@ -53,7 +52,7 @@ public class KhachHangDAO {
 
     public void themKhachHang(KhachHang kh) {
         danhSachKhachHang.add(kh);
-        saveData(); // Ghi file ngay lập tức
+        saveData();
     }
 
     public List<KhachHang> layDanhSach() {
@@ -64,7 +63,7 @@ public class KhachHangDAO {
         for (int i = 0; i < danhSachKhachHang.size(); i++) {
             if (danhSachKhachHang.get(i).getMaSo().equals(khMoi.getMaSo())) {
                 danhSachKhachHang.set(i, khMoi);
-                saveData(); // Ghi file ngay lập tức
+                saveData();
                 return true;
             }
         }
@@ -74,7 +73,7 @@ public class KhachHangDAO {
     public boolean xoaKhachHang(String maSo) {
         boolean ketQua = danhSachKhachHang.removeIf(kh -> kh.getMaSo().equals(maSo));
         if (ketQua) {
-            saveData(); // Ghi file ngay lập tức
+            saveData();
         }
         return ketQua;
     }

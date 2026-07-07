@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in,"UTF-8");
         KhachHangUI khachHangUI = new KhachHangUI();
         ThoSuaChuaUI thoSuaChuaUI = new ThoSuaChuaUI();
         HoaDonUI hoaDonUI = new HoaDonUI(); // MỚI THÊM: Khởi tạo UI của hóa đơn

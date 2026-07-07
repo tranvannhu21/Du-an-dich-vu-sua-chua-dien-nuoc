@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class ThoSuaChuaUI {
     private ThoSuaChuaBLL bll = new ThoSuaChuaBLL();
-    private Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in, "UTF-8");
 
     public void hienThiMenu() {
         int luaChon = -1;

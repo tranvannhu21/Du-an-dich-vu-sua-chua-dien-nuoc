@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class KhachHangUI {
     private KhachHangBLL bll = new KhachHangBLL();
-    private Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in, "UTF-8");
 
     public void hienThiMenu() {
         int luaChon = -1;
@@ -54,15 +54,7 @@ public class KhachHangUI {
         String hoTen = scanner.nextLine();
         System.out.print("Nhập số điện thoại: ");
         String sdt = scanner.nextLine();
-
-        System.out.print("Nhập điểm tích lũy ban đầu: ");
-        int diem = 0;
-        try {
-            diem = Integer.parseInt(scanner.nextLine());
-        } catch (NumberFormatException e) {
-            System.out.println("Điểm tích lũy phải là số! Hệ thống mặc định gán = 0.");
-        }
-        bll.themMoiKhachHang(maSo, hoTen, sdt, diem);
+        bll.themMoiKhachHang(maSo, hoTen, sdt);
     }
 
     private void xuLyCapNhat() {
@@ -75,16 +67,7 @@ public class KhachHangUI {
 
         System.out.print("Nhập số điện thoại mới: ");
         String sdtMoi = scanner.nextLine();
-
-        System.out.print("Nhập điểm tích lũy mới: ");
-        int diemMoi = 0;
-        try {
-            diemMoi = Integer.parseInt(scanner.nextLine());
-        } catch (NumberFormatException e) {
-            System.out.println("Lỗi: Điểm phải là số, hủy thao tác cập nhật.");
-            return; // Thoát hàm nếu nhập sai
-        }
-        bll.capNhatKhachHang(maSo, hoTenMoi, sdtMoi, diemMoi);
+        bll.capNhatKhachHang(maSo, hoTenMoi, sdtMoi);
     }
 
     private void xuLyXoa() {

@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class HoaDonUI {
     private HoaDonBLL hoaDonBLL = new HoaDonBLL();
-    private Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in, "UTF-8");
 
     public void hienThiMenu() {
         int luaChon = -1;
@@ -15,7 +15,7 @@ public class HoaDonUI {
             System.out.println("2. Xem danh sách hóa đơn");
             System.out.println("3. Xác nhận thanh toán");
             System.out.println("0. Quay lại");
-            System.out.print("=> Chọn chức năng: ");
+            System.out.print("Chọn chức năng: ");
 
             try {
                 luaChon = Integer.parseInt(scanner.nextLine());
