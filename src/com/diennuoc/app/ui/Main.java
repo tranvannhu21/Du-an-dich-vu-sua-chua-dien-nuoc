@@ -13,10 +13,10 @@ public class Main {
 
         while (luaChon != 0) {
             System.out.println("Hệ thống quản lý dịch vụ sửa chữa điện nước");
-            System.out.println("1. Quản lý khách hàng");
-            System.out.println("2. Quản lý thợ sửa chữa");
-            System.out.println("3. Hóa đơn & thanh toán");
-            System.out.println("0. Thoát");
+            System.out.println("1.Quản lý khách hàng");
+            System.out.println("2.Quản lý thợ sửa chữa");
+            System.out.println("3.Hóa đơn & thanh toán");
+            System.out.println("0.Thoát");
             System.out.print("Mời nhập: ");
 
             try {

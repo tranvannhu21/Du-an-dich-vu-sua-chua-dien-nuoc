@@ -13,7 +13,6 @@ public final class FileHandler {
     }
 
     public static <T> void writeToTextFile(Path path, List<T> data, Function<T, String> serializer) throws IOException {
-        // TODO: Students implement this
         Path parent = path.getParent();
         if (parent != null && Files.notExists(parent)) {
             Files.createDirectories(parent);
@@ -27,7 +26,6 @@ public final class FileHandler {
     }
 
     public static <T> List<T> readFromTextFile(Path path, Function<String, T> parser) throws IOException {
-        // TODO: Students implement this
         List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
         List<T> result = new ArrayList<>();
         for (String line : lines) {
@@ -37,12 +35,10 @@ public final class FileHandler {
     }
 
     public static <T> void writeToCsv(Path path, List<T> data, Function<T, String> csvMapper) throws IOException {
-        // TODO: Students implement this
         writeToTextFile(path, data, csvMapper);
     }
 
     public static <T> List<T> readFromCsv(Path path, Function<String, T> csvParser) throws IOException {
-        // TODO: Students implement this
         return readFromTextFile(path, csvParser);
     }
 }
