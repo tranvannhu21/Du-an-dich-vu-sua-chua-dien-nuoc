@@ -12,6 +12,15 @@ public class KhachHangBLL {
             System.out.println("Lỗi: Mã số và Họ tên không được để trống!");
             return;
         }
+
+        List<KhachHang> ds = khachHangDAO.layDanhSach();
+        for (KhachHang kh : ds) {
+            if (kh.getMaSo().equals(maSo)) {
+                System.out.println("Lỗi: Mã khách hàng " + maSo + " đã tồn tại, vui lòng nhập mã khác!");
+                return;
+            }
+        }
+
         if (soDienThoai.length() < 10) {
             System.out.println("Lỗi: Số điện thoại không hợp lệ!");
             return;

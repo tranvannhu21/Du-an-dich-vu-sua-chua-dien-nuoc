@@ -1,105 +1,126 @@
-### 1. Mục tiêu dự án
-   Làm template chuẩn kiến trúc phân tầng (Layered Architecture).
-   Rèn luyện OOP nâng cao: kế thừa, đa hình, interface, abstract class, generic, exception, tách lớp trách nhiệm.
-   Thực hành mở rộng nghiệp vụ theo hướng clean code và dễ bảo trì.
+# Hệ thống Quản lý Dịch vụ Sửa chữa Điện Nước
+Ứng dụng console viết bằng Java, quản lý khách hàng, thợ sửa chữa và 
+hóa đơn thanh toán cho một dịch vụ sửa chữa điện nước. 
+Dữ liệu được lưu trữ dưới dạng file CSV, không sử dụng cơ sở dữ liệu.
 
-### 2. Yêu cầu môi trường
-   JDK 17 trở lên.
-   Terminal (zsh/bash/cmd) để biên dịch và chạy thủ công.
-   IDE khuyến nghị: VS Code hoặc IntelliJ.
-   Kiểm tra Java:
 
-java -version
-javac -version
+### Giới thiệu
 
-### 3. Cấu trúc thư mục
-   src/main/java/com/diennuoc
-   ├── bll
-   │   ├── HoaDonBLL.java
-   │   ├── KhachHangBLL.java
-   │   ├── ThoSuaChuaBLL.java
-   ├── dao
-   │   ├── HoaDonDAO.java
-   │   ├── KhachHangDAO.java
-   │   ├── ThoSuaChuaDAO.java
-   ├── entity
-   │   ├── HoaDon.java
-   │   ├── KhachHang.java
-   │   └── ThoSuaChua.java
-   ├── ui
-   │   ├── HoaDonUI.java
-       ├── Main.java
-   │   ├── KhachHang.java
-   │   └── ThoSuaChua.java
-   └── util
-   ├── FileHandler.java
+Dự án mô phỏng nghiệp vụ của một cửa hàng/đội thợ sửa chữa điện nước, cho phép:
+Quản lý thông tin khách hàng
+Quản lý thông tin thợ sửa chữa
+Tạo và theo dõi hóa đơn dịch vụ, xác nhận thanh toán
+Đây là dự án học tập, tập trung vào việc rèn luyện lập trình hướng đối tượng 
+(OOP) và phân tách kiến trúc theo tầng (layered architecture) trong Java.
 
-### 4. Vai trò từng tầng
+### Kiến trúc dự án
 
-#### 4.1 entity (Tầng Thực thể dữ liệu)
-Vai trò: Là nơi chứa các "khuôn đúc" tạo nên các đối tượng trong hệ thống.
-Nhiệm vụ: Chỉ chứa các thuộc tính (ví dụ: maSo, hoTen, tongTien), hàm khởi tạo (constructor) và các hàm Getters/Setters.
-Đặc điểm: Tầng này "ngây thơ" nhất. Nó không chứa bất kỳ logic tính toán phức tạp, không in ra màn hình và không biết gì về việc lưu file. Nó chỉ đơn thuần là gói bọc dữ liệu.
+Dự án được tổ chức theo mô hình phân tầng gồm 4 lớp:
 
-#### 4.2 ui (User Interface - Tầng Giao diện)
-Vai trò: Là "mặt tiền" của ứng dụng, nơi duy nhất tương tác trực tiếp với người dùng.
-Nhiệm vụ: * Hiển thị menu chức năng ra màn hình Console (System.out.println).
-Tiếp nhận lựa chọn và dữ liệu người dùng nhập vào (thông qua InputHelper).
-Gọi tầng bll để xử lý yêu cầu, sau đó nhận kết quả từ bll để in ra thông báo "Thành công" hoặc "Thất bại".
-Đặc điểm: Tuyệt đối không tự ý lưu dữ liệu hay chứa các logic kiểm tra đúng sai (như kiểm tra mã trùng).
+Entity: Định nghĩa đối tượng dữ liệu (KhachHang, ThoSuaChua, HoaDon).
+DAO(Data Access Object): Đọc/ghi dữ liệu từ file CSV, thao tác trực tiếp với danh sách trong bộ nhớ.
+BLL(Business Logic Layer): Kiểm tra tính hợp lệ dữ liệu, xử lý nghiệp vụ trước khi gọi xuống DAO.
+UI: Hiển thị menu, nhận thao tác từ người dùng qua console.
 
-#### 4.3 bll (Business Logic Layer - Tầng Nghiệp vụ)
-Vai trò: Là "bộ não" của hệ thống, đứng ở giữa làm cầu nối bảo vệ dữ liệu.
-Nhiệm vụ: Kiểm tra các quy tắc nghiệp vụ (Business Rules).
-Ví dụ: Khi ui gửi yêu cầu thêm khách hàng, bll sẽ kiểm tra xem mã khách hàng đó đã tồn tại chưa, số điện thoại có hợp lệ không.
-Nếu hợp lệ, bll mới ra lệnh cho dao lưu lại. Nếu sai, bll sẽ trả về thông báo lỗi cho ui.
-Đặc điểm: Nó nhận dữ liệu từ ui, nhào nặn, kiểm tra, rồi mới đẩy xuống dao.
+Luồng xử lý một thao tác: UI → BLL (kiểm tra hợp lệ) → DAO (đọc/ghi file) → Entity (đối tượng dữ liệu).
 
-#### 4.4 dao (Data Access Object - Tầng Truy xuất dữ liệu)
-Vai trò: Là "thủ kho", chuyên làm việc với kho lưu trữ.
-Nhiệm vụ: Thực hiện các thao tác Thêm (Create), Đọc (Read), Sửa (Update), Xóa (Delete) trực tiếp lên danh sách ArrayList và ghi/đọc xuống file .csv.
-Đặc điểm: Tầng này không quan tâm dữ liệu đúng hay sai (vì bll đã kiểm tra rồi). Cứ bll đưa dữ liệu xuống là nó lưu vào file, bll đòi lấy danh sách là nó đọc từ file lên trả về.
+### Cấu trúc thư mục
 
-#### 4.5 utils (Tầng Tiện ích)
-Vai trò: Là "hộp đồ nghề" dùng chung cho toàn bộ dự án.
-Nhiệm vụ: Chứa các lớp hỗ trợ độc lập, có thể mang đi dùng ở bất cứ đâu.
-FileHandler: Chuyên xử lý kỹ thuật đọc/ghi file CSV.
-InputHelper: Chuyên ép kiểu và bắt lỗi khi người dùng gõ phím.
-Đặc điểm: Các hàm trong này thường là public static để gọi trực tiếp mà không cần khởi tạo đối tượng.
+src/
+└── com/diennuoc/app/
+├── entity/
+│   ├── KhachHang.java
+│   ├── ThoSuaChua.java
+│   └── HoaDon.java
+├── dao/
+│   ├── KhachHangDAO.java
+│   ├── ThoSuaChuaDAO.java
+│   └── HoaDonDAO.java
+├── bll/
+│   ├── KhachHangBLL.java
+│   ├── ThoSuaChuaBLL.java
+│   └── HoaDonBLL.java
+├── ui/
+│   ├── Main.java
+│   ├── KhachHangUI.java
+│   ├── ThoSuaChuaUI.java
+│   └── HoaDonUI.java
+└── utils/
+└── FileHandler.java
 
-### 5. Luồng chạy tổng quát
-   Main khởi tạo repository in-memory cho Product và Order.
-   Main khởi tạo ProductServiceImpl và OrderServiceImpl.
-   Main truyền service vào MenuConsole.
-   MenuConsole chạy vòng lặp menu, nhận lựa chọn người dùng.
-   Service xử lý nghiệp vụ và gọi repository để CRUD.
+khachhang.csv       # Dữ liệu khách hàng (tự sinh khi chạy)
+thosuachua.csv       # Dữ liệu thợ sửa chữa (tự sinh khi chạy)
+hoadon.csv           # Dữ liệu hóa đơn (tự sinh khi chạy)
 
-### 6. Hướng dẫn sử dụng menu Console
+### Chức năng chính
 
-#### Menu hiện có:
-1.Quản lý khách hàng
-2.Quản lý thợ sửa chữa
-3.Hóa đơn & thanh toán
-0.Thoát
+1. Quản lý khách hàng
+-Thêm khách hàng mới (kiểm tra mã trùng, họ tên và số điện thoại không được để trống)
+-Hiển thị danh sách khách hàng
+-Cập nhật thông tin khách hàng
+-Xóa khách hàng (có xác nhận trước khi xóa)
 
-##### Luồng Quản lý khách hàng:
-1.Thêm khách hàng
-2.Hiển thi thông tin khách hàng
-3.Cập nhật thông tin khách hàng
-4.Xóa khách hàng
-0.Quay lại/Thoát
 
-##### Luồng quản lý thợ:
-1.Thêm thợ mới
-2.Hiển thị thợ đang hoạt động
-3.Thông tin thợ
-4.Cho nghỉ việc
-0.Quay lại/Thoát
+2. Quản lý thợ sửa chữa
+-Thêm thợ mới (kiểm tra mã trùng)
+-Hiển thị danh sách thợ đang hoạt động
+-Cập nhật thông tin thợ
+-Cho thợ nghỉ việc (xóa mềm — chỉ chuyển trạng thái, không xóa khỏi file)
 
-##### Luồng hóa đơn & thanh toán:
-1.Tạo hóa đơn mới
-2.Xem danh sách hóa đơn
-3.Xác nhận thanh toán
-0.Quay lại
 
-### 7. Tài liệu tính năng
+3. Hóa đơn & thanh toán
+-Tạo hóa đơn mới, gắn với mã khách hàng và mã thợ
+-Hiển thị danh sách hóa đơn
+-Xác nhận thanh toán cho hóa đơn theo mã
+
+
+### Yêu cầu hệ thống
+JDK 8 trở lên (không dùng cú pháp/API của Java 10+)
+IDE khuyến nghị: IntelliJ IDEA
+
+
+### Cách chạy chương trình
+Chạy bằng IntelliJ IDEA
+
+Mở project trong IntelliJ.
+Vào Run → Edit Configurations, tạo cấu hình Application với Main class là com.diennuoc.app.ui.Main.
+Thêm VM option: -Dfile.encoding=UTF-8 để hiển thị đúng tiếng Việt.
+Bấm Run.
+
+Chạy bằng dòng lệnh (Windows)
+
+bashchcp 65001
+javac -d out -encoding UTF-8 -cp src src/com/diennuoc/app/ui/*.java src/com/diennuoc/app/**/*.java
+java -Dfile.encoding=UTF-8 -cp out com.diennuoc.app.ui.Main
+
+### Định dạng dữ liệu
+
+khachhang.csv
+
+maSo,hoTen,soDienThoai
+004,Trần Văn Như,0356789342
+
+thosuachua.csv
+
+maSo,hoTen,soDienThoai,chuyenMon,sanSangLamViec,dangHoatDong
+007,Lê Văn Hồng,0342198567,Dien,true,true
+
+hoadon.csv
+
+maHoaDon,maKhachHang,maTho,tongTien,daThanhToan,phuongThucThanhToan
+HD01,004,007,150000.0,false,Ví điện tử (MoMo)
+
+### Lưu ý về encoding tiếng Việt
+
+Chương trình đọc/ghi file CSV theo chuẩn UTF-8 thông qua FileHandler. Tuy nhiên, việc nhập liệu từ console trên Windows có thể bị lỗi hiển thị dấu tiếng Việt nếu terminal không ở chế độ UTF-8. Trước khi chạy, hãy:
+
+Chạy chcp 65001 trong CMD, hoặc
+Thêm VM option -Dfile.encoding=UTF-8 khi chạy bằng IntelliJ/dòng lệnh.
+
+
+### Hướng phát triển
+
+Bổ sung bọc try-catch khi đọc từng dòng CSV để tránh crash toàn bộ chương trình khi gặp dòng dữ liệu lỗi.
+Kiểm tra mã khách hàng/mã thợ có tồn tại trước khi tạo hóa đơn.
+Cho phép người dùng chọn phương thức thanh toán thay vì mặc định "Ví điện tử (MoMo)".
+Có thể mở rộng sang lưu trữ bằng cơ sở dữ liệu (SQL) thay vì file CSV.

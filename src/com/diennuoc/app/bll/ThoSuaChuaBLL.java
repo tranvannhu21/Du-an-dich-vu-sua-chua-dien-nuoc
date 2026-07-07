@@ -12,6 +12,15 @@ public class ThoSuaChuaBLL {
             System.out.println("Lỗi: Các trường thông tin không được để trống!");
             return;
         }
+
+        List<ThoSuaChua> ds = thoSuaChuaDAO.layDanhSachHoatDong();
+        for (ThoSuaChua tho : ds) {
+            if (tho.getMaSo().equals(maSo)) {
+                System.out.println("Lỗi: Mã thợ " + maSo + " đã tồn tại, vui lòng nhập mã khác!");
+                return;
+            }
+        }
+
         ThoSuaChua tho = new ThoSuaChua(maSo, hoTen, soDienThoai, chuyenMon);
         thoSuaChuaDAO.themTho(tho);
         System.out.println("-> Thêm thợ sửa chữa thành công!");
