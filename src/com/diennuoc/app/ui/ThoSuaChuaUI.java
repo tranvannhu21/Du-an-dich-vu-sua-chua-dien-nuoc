@@ -10,13 +10,13 @@ public class ThoSuaChuaUI {
     public void hienThiMenu() {
         int luaChon = -1;
         while (luaChon != 0) {
-            System.out.println("\n========== QUẢN LÝ THỢ SỬA CHỮA ==========");
+            System.out.println("\nQuản lý thợ: ");
             System.out.println("1. Thêm thợ mới");
-            System.out.println("2. Hiển thị danh sách thợ đang hoạt động");
+            System.out.println("2. Hiển thị thợ đang hoạt động");
             System.out.println("3. Cập nhật thông tin thợ");
             System.out.println("4. Cho nghỉ việc");
-            System.out.println("0. Quay lại / Thoát");
-            System.out.print("=> Nhập lựa chọn của bạn: ");
+            System.out.println("0. Quay lại/Thoát");
+            System.out.print("Nhập: ");
 
             try {
                 luaChon = Integer.parseInt(scanner.nextLine());
@@ -37,7 +37,7 @@ public class ThoSuaChuaUI {
     }
 
     private void xuLyThem() {
-        System.out.println("\n--- THÊM THỢ MỚI ---");
+        System.out.println("\nThêm thợ mới");
         System.out.print("Nhập mã thợ: ");
         String maSo = scanner.nextLine();
         System.out.print("Nhập họ tên: ");
@@ -50,7 +50,7 @@ public class ThoSuaChuaUI {
     }
 
     private void xuLyCapNhat() {
-        System.out.println("\n--- CẬP NHẬT THÔNG TIN THỢ ---");
+        System.out.println("\nCập nhật thông tin");
         System.out.print("Nhập mã thợ cần sửa: ");
         String maSo = scanner.nextLine();
         System.out.print("Nhập họ tên mới: ");
@@ -63,7 +63,7 @@ public class ThoSuaChuaUI {
     }
 
     private void xuLyXoa() {
-        System.out.println("\n--- CHO THỢ NGHỈ VIỆC ---");
+        System.out.println("\nCho nghỉ việc");
         System.out.print("Nhập mã thợ cần cho nghỉ: ");
         String maSo = scanner.nextLine();
 

@@ -10,11 +10,11 @@ public class HoaDonUI {
     public void hienThiMenu() {
         int luaChon = -1;
         while (luaChon != 0) {
-            System.out.println("\n--- QUẢN LÝ THANH TOÁN & HÓA ĐƠN ---");
+            System.out.println("\nHóa đơn & thanh toán: ");
             System.out.println("1. Tạo hóa đơn mới");
             System.out.println("2. Xem danh sách hóa đơn");
-            System.out.println("3. Xác nhận thu tiền (Thanh toán)");
-            System.out.println("0. Quay lại menu chính");
+            System.out.println("3. Xác nhận thanh toán");
+            System.out.println("0. Quay lại");
             System.out.print("=> Chọn chức năng: ");
 
             try {
@@ -30,7 +30,7 @@ public class HoaDonUI {
                         xuLyThanhToan();
                         break;
                     case 0:
-                        System.out.println("Quay lại menu chính...");
+                        System.out.println("Quay lại menu chính");
                         break;
                     default:
                         System.out.println("Lựa chọn không hợp lệ!");
@@ -42,7 +42,7 @@ public class HoaDonUI {
     }
 
     private void xuLyTaoHoaDon() {
-        System.out.println("\n--- TẠO HÓA ĐƠN MỚI ---");
+        System.out.println("\nTạo hóa đơn mới");
         System.out.print("Nhập mã hóa đơn: ");
         String maHD = scanner.nextLine();
         System.out.print("Nhập mã khách hàng: ");
@@ -50,12 +50,12 @@ public class HoaDonUI {
         System.out.print("Nhập mã thợ sửa chữa: ");
         String maTho = scanner.nextLine();
 
-        System.out.print("Nhập tổng tiền (VNĐ): ");
+        System.out.print("Nhập số tiền thanh toán: ");
         try {
             double tongTien = Double.parseDouble(scanner.nextLine());
             hoaDonBLL.taoHoaDonMoi(maHD, maKH, maTho, tongTien);
         } catch (NumberFormatException e) {
-            System.out.println("Lỗi: Tổng tiền phải là một con số!");
+            System.out.println("Lỗi:Tiền thanh toán phải là một số!");
         }
     }
 

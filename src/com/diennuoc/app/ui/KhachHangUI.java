@@ -9,13 +9,13 @@ public class KhachHangUI {
     public void hienThiMenu() {
         int luaChon = -1;
         while (luaChon != 0) {
-            System.out.println("\n========== QUẢN LÝ KHÁCH HÀNG ==========");
+            System.out.println("\nQuản lý khách hàng: ");
             System.out.println("1. Thêm khách hàng mới");
             System.out.println("2. Hiển thị danh sách");
             System.out.println("3. Cập nhật thông tin khách hàng");
             System.out.println("4. Xóa khách hàng");
-            System.out.println("0. Quay lại / Thoát");
-            System.out.print("=> Nhập lựa chọn của bạn: ");
+            System.out.println("0. Quay lại/Thoát");
+            System.out.print("Nhập: ");
 
             try {
                 luaChon = Integer.parseInt(scanner.nextLine());
@@ -38,7 +38,7 @@ public class KhachHangUI {
                     xuLyXoa();
                     break;
                 case 0:
-                    System.out.println("Đã thoát menu Quản lý Khách hàng.");
+                    System.out.println("Đã thoát menu Quản lý khách hàng.");
                     break;
                 default:
                     System.out.println("Lựa chọn không hợp lệ, vui lòng chọn từ 0 đến 4.");
@@ -47,7 +47,7 @@ public class KhachHangUI {
     }
 
     private void xuLyThem() {
-        System.out.println("\n--- THÊM KHÁCH HÀNG ---");
+        System.out.println("\nThêm khách hàng");
         System.out.print("Nhập mã số: ");
         String maSo = scanner.nextLine();
         System.out.print("Nhập họ tên: ");
@@ -66,7 +66,7 @@ public class KhachHangUI {
     }
 
     private void xuLyCapNhat() {
-        System.out.println("\n--- CẬP NHẬT THÔNG TIN ---");
+        System.out.println("\nCập nhật thông tin");
         System.out.print("Nhập mã khách hàng cần sửa: ");
         String maSo = scanner.nextLine();
 
@@ -81,14 +81,14 @@ public class KhachHangUI {
         try {
             diemMoi = Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e) {
-            System.out.println("Lỗi: Điểm phải là số! Hủy thao tác cập nhật.");
+            System.out.println("Lỗi: Điểm phải là số, hủy thao tác cập nhật.");
             return; // Thoát hàm nếu nhập sai
         }
         bll.capNhatKhachHang(maSo, hoTenMoi, sdtMoi, diemMoi);
     }
 
     private void xuLyXoa() {
-        System.out.println("\n--- XÓA KHÁCH HÀNG ---");
+        System.out.println("\nXóa khách hàng");
         System.out.print("Nhập chính xác mã khách hàng cần xóa: ");
         String maSo = scanner.nextLine();
 

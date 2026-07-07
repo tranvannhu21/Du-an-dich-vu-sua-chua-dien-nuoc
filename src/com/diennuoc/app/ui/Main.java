@@ -12,15 +12,12 @@ public class Main {
         int luaChon = -1;
 
         while (luaChon != 0) {
-            System.out.println("\n=====================================================");
-            System.out.println("   HỆ THỐNG QUẢN LÝ DỊCH VỤ SỬA CHỮA ĐIỆN NƯỚC");
-            System.out.println("=====================================================");
-            System.out.println("1. Quản lý Khách hàng");
-            System.out.println("2. Quản lý Thợ sửa chữa");
-            System.out.println("3. Quản lý Hóa đơn & Thanh toán");
-            System.out.println("0. Thoát chương trình");
-            System.out.println("-----------------------------------------------------");
-            System.out.print("=> Mời bạn nhập lựa chọn: ");
+            System.out.println("Hệ thống quản lý dịch vụ sửa chữa điện nước");
+            System.out.println("1. Quản lý khách hàng");
+            System.out.println("2. Quản lý thợ sửa chữa");
+            System.out.println("3. Hóa đơn & thanh toán");
+            System.out.println("0. Thoát");
+            System.out.print("Mời nhập: ");
 
             try {
                 luaChon = Integer.parseInt(scanner.nextLine());
