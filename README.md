@@ -98,7 +98,7 @@ java -Dfile.encoding=UTF-8 -cp out com.diennuoc.app.ui.Main
 khachhang.csv
 
 maSo,hoTen,soDienThoai
-004,Trần Văn Như,0356789342
+004,Trần Văn Nhu,0356789342
 
 thosuachua.csv
 
